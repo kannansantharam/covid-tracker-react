@@ -1,0 +1,25 @@
+.infobox{
+    width: 30%;
+    cursor: pointer;
+}
+.infobox__cases{
+    
+}
+.infobox.cases.infobox__active{
+    border-top:3px solid #cc1034;
+}
+.infobox.recovered.infobox__active{
+    border-top:3px solid #7dd71d;
+}
+.infobox.deaths.infobox__active{
+    border-top:3px solid #333;
+}
+.infobox.cases .infobox__cases{
+    color:#cc1034 !important;
+}
+.infobox.recovered .infobox__cases{
+    color:#7dd71d !important;
+}
+.infobox.deaths .infobox__cases{
+    color:#333 !important;
+}
