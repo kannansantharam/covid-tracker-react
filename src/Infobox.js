@@ -4,7 +4,8 @@ import './Infobox.css';
 import numeral from 'numeral';
 
 
-function Infobox({ title, cases, total, onClick, active, caseType,updated }) {
+function Infobox({ title, cases, total, onClick, active, caseType, updated }) {
+    console.log("cases ", cases);
     return (
         <div onClick={onClick}
             className={`infobox ${active && 'infobox__active'} ${caseType}`} >
@@ -14,10 +15,12 @@ function Infobox({ title, cases, total, onClick, active, caseType,updated }) {
                         {title}
                     </Typography>
                     <h2 className="infobox__cases">
-                        { numeral(total).format("0.0a") }
+                        {numeral(total).format("0.0a")}
                     </h2>
                     <Typography className="infobox__total" color="textSecondary">
-                        {cases ? "+" + numeral(cases).format("0.0a") : "+0"}
+                        {cases ? cases > 0 ?
+                            "+" + numeral(cases).format("0.0a") : numeral(cases).format("0.0a")
+                            : "+0"}
 
                     </Typography>
                     <Typography className="infobox__updated" color="textSecondary">
