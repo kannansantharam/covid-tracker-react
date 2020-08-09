@@ -36,3 +36,12 @@ margin-bottom: 20px;
     flex-direction: column;
   }
 }
+@media (max-width:590px) {
+  .app__stats {
+    flex-direction: column;
+  }
+  .infobox{
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+}

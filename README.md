@@ -4,7 +4,9 @@ COVID-19 Tracker using React and Material UI.
 
 Data from disease.sh.
 
-![Alt text](/src/covid-tracker-react.png?raw=true "Covid-19 tracker")
+Checkout the project here -> [Covid-19 Tracker](https://covid19-tracker-20762.web.app/)
+
+![Alt text](/src/covid-tracker-react.png?raw=true "Covid-19 Tracker")
 
 ## Available Scripts
 
