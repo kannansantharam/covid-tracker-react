@@ -116,8 +116,8 @@ function App() {
       <Card className="app__right">
         <CardContent>
           <h3>Cases by country</h3>
-          <Table countries={tableData} />
-          <h3>Worldwide new {caseType}</h3>
+          <Table countries={tableData} /> <br />
+          <h3>Worldwide new {caseType}</h3><br />
           <Linegraph caseTypes={caseType} />
         </CardContent>
       </Card>

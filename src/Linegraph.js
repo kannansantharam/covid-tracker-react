@@ -70,7 +70,21 @@ function Linegraph( { caseTypes = "cases" } ) {
                 })
         }
         fetchData();
-    }, [caseTypes])
+    }, [caseTypes]);
+    const lineGraphColor = {
+        cases :{
+            borderColor : "#cc1034",
+            backgroundColor: "rgba(204, 16, 52, 0.5)"
+        },
+        recovered: {
+            borderColor: "#7dd71d",
+            backgroundColor: "#c3e59d",
+        },
+        deaths: {
+            borderColor: "#333",
+            backgroundColor: "#666",
+        }
+    }
     return (
         <div>
          
@@ -79,8 +93,8 @@ function Linegraph( { caseTypes = "cases" } ) {
                     data={{
                         datasets: [
                             { 
-                                borderColor: "#cc1034",
-                                backgroundColor: "rgba(204, 16, 52, 0.5)",
+                                borderColor: {caseTypes} ? lineGraphColor[caseTypes].borderColor : "#cc1034",
+                                backgroundColor:{caseTypes} ? lineGraphColor[caseTypes].backgroundColor : "rgba(204, 16, 52, 0.5)",
                                 data: data
                             }
                         ]
