@@ -5,7 +5,7 @@ import './App.css';
 import Infobox from './Infobox';
 import Map from './Map'
 import Table from './Table';
-import { sortData, showCirclesOnMap } from './util.js';
+import { sortData } from './util.js';
 import Linegraph from './Linegraph';
 import "leaflet/dist/leaflet.css";
 
@@ -58,8 +58,10 @@ function App() {
         .then((data) => {
           setCountryInfo(data);
           setCountry(countryCode);
-          setmapCenter([data.countryInfo.lat, data.countryInfo.long]);
-          console.log([data.countryInfo.lat, data.countryInfo.long])
+          let lat = data.countryInfo ? data.countryInfo.lat : 20;
+          let long = data.countryInfo ? data.countryInfo.long : 70;
+          console.log(data);
+          setmapCenter([lat, long]);
           setmapZoom(4)
         })
     };
@@ -71,6 +73,9 @@ function App() {
       setCaseType("cases")
     } else if (caseType === "recovered") {
       setCaseType("recovered")
+    } else if (caseType === "activecase") {
+      setCaseType("activecase");
+      return
     } else {
       setCaseType("deaths");
     }
@@ -97,25 +102,35 @@ function App() {
             cases={countryInfo.todayCases}
             total={countryInfo.cases}
             caseType="cases"
+            updated={countryInfo.updated}
             onClick={() => onInfoboxClick("cases")} />
+          <Infobox title="Active"
+            active={caseType === "activecase"}
+            cases={countryInfo.todayCases - countryInfo.todayRecovered - countryInfo.todayDeaths}
+            total={countryInfo.active}
+            caseType="activecase"
+            updated={countryInfo.updated}
+            onClick={() => onInfoboxClick("activecase")} />
           <Infobox title="Recovered"
-          active={caseType === "recovered"}
+            active={caseType === "recovered"}
             cases={countryInfo.todayRecovered}
             total={countryInfo.recovered}
             caseType="recovered"
+            updated={countryInfo.updated}
             onClick={() => onInfoboxClick("recovered")} />
           <Infobox title="Deaths"
             active={caseType === "deaths"}
             cases={countryInfo.todayDeaths}
             caseType="deaths"
             total={countryInfo.deaths}
+            updated={countryInfo.updated}
             onClick={() => onInfoboxClick("deaths")} />
         </div>
-        <Map center={mapCenter} zoom={mapZoom} countries={mapCountries} caseType={caseType}/>
+        <Map center={mapCenter} zoom={mapZoom} countries={mapCountries} caseType={caseType} />
       </div>
       <Card className="app__right">
         <CardContent>
-          <h3>Cases by country</h3>
+          <h3>Live cases by country</h3>
           <Table countries={tableData} /> <br />
           <h3>Worldwide new {caseType}</h3><br />
           <Linegraph caseTypes={caseType} />

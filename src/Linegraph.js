@@ -57,8 +57,15 @@ const constructChartData = (data, caseType = "cases") => {
     console.log("chartData ", chartData);
     return chartData;
 }
-function Linegraph( { caseTypes = "cases" } ) {
-    const [data, setData] = useState({});
+const generateActiveCases = (data) =>{
+    let active = {};
+    for(let date in data["cases"]){
+        active[date] = data["cases"][date] - data["recovered"][date] - data["deaths"][date];
+    }
+    return active;
+}
+function Linegraph({ caseTypes = "cases" }) {
+    const [data, setData] = useState({}); 
     useEffect(() => {
         const fetchData = async () => {
             await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=100")
@@ -66,35 +73,46 @@ function Linegraph( { caseTypes = "cases" } ) {
                     return response.json()
                 })
                 .then(data => {
+                    if (caseTypes === "activecase") {
+                        let activeCases = generateActiveCases(data);
+                        data["active"] = activeCases;
+                        console.log("active ",data);
+                        caseTypes = "active";
+                      //  return;
+                    }
                     setData(constructChartData(data, caseTypes));
                 })
         }
         fetchData();
     }, [caseTypes]);
     const lineGraphColor = {
-        cases :{
-            borderColor : "#cc1034",
+        cases: {
+            borderColor: "#cc1034",
             backgroundColor: "rgba(204, 16, 52, 0.5)"
         },
         recovered: {
             borderColor: "#7dd71d",
             backgroundColor: "#c3e59d",
         },
+        activecase: {
+            borderColor: "#1769aa",
+            backgroundColor: "#4dabf5",
+        },
         deaths: {
             borderColor: "#333",
-            backgroundColor: "#666",
+            backgroundColor: "#999",
         }
     }
     return (
         <div>
-         
+
             {data && Object.keys(data).length > 0 && (
                 <Line
                     data={{
                         datasets: [
-                            { 
-                                borderColor: {caseTypes} ? lineGraphColor[caseTypes].borderColor : "#cc1034",
-                                backgroundColor:{caseTypes} ? lineGraphColor[caseTypes].backgroundColor : "rgba(204, 16, 52, 0.5)",
+                            {
+                                borderColor: { caseTypes } ? lineGraphColor[caseTypes].borderColor : "#cc1034",
+                                backgroundColor: { caseTypes } ? lineGraphColor[caseTypes].backgroundColor : "rgba(204, 16, 52, 0.5)",
                                 data: data
                             }
                         ]

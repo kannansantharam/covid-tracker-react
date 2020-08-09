@@ -4,7 +4,7 @@ import './Infobox.css';
 import numeral from 'numeral';
 
 
-function Infobox({ title, cases, total, onClick, active,caseType }) {
+function Infobox({ title, cases, total, onClick, active, caseType,updated }) {
     return (
         <div onClick={onClick}
             className={`infobox ${active && 'infobox__active'} ${caseType}`} >
@@ -13,12 +13,15 @@ function Infobox({ title, cases, total, onClick, active,caseType }) {
                     <Typography className="infobox__title" color="textSecondary">
                         {title}
                     </Typography>
-                    <h2 className="infobox__cases">{
-                        cases ?
-                            "+" + numeral(cases).format("0.0a") : "+0"
-                    }</h2>
+                    <h2 className="infobox__cases">
+                        { numeral(total).format("0.0a") }
+                    </h2>
                     <Typography className="infobox__total" color="textSecondary">
-                        {numeral(total).format("0.0a")}
+                        {cases ? "+" + numeral(cases).format("0.0a") : "+0"}
+
+                    </Typography>
+                    <Typography className="infobox__updated" color="textSecondary">
+                        {new Date(updated).toLocaleString()}
                     </Typography>
                 </CardContent>
             </Card>

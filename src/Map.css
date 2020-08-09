@@ -25,7 +25,8 @@
 }
 .info-cases,
 .info-recovered,
-.info-deaths{
+.info-deaths,
+.info-activecase{
     font-size:16px;
     margin-top: 5px;
 }

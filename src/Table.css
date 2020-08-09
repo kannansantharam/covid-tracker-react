@@ -14,5 +14,7 @@
 }
 .table td{
     padding: 0.5rem;
-
+}
+.table td:nth-of-type(even){
+    font-weight: 700;
 }
